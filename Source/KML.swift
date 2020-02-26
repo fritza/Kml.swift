@@ -16,19 +16,19 @@ https://developers.google.com/kml/documentation/kmlreference
 
 // Supporting tags
 public enum KMLTag: String {
-    case Style
-    case StyleMap
-    case PolyStyle
-    case LineStyle
-    case IconStyle
-    case BalloonStyle
-    case MultiGeometry
-    case Polygon
-    case LineString
-    case Point
-    case Folder
-    case Placemark
-    case Icon
+    case style = "Style"
+    case styleMap = "StyleMap"
+    case polyStyle = "PolyStyle"
+    case lineStyle = "LineStyle"
+    case iconStyle = "IconStyle"
+    case balloonStyle = "BalloonStyle"
+    case multiGeometry = "MultiGeometry"
+    case polygon = "Polygon"
+    case lineString = "LineString"
+    case point = "Point"
+    case folder = "Folder"
+    case placemark = "Placemark"
+    case icon = "Icon"
 
     public var str: String {
         return self.rawValue
@@ -38,19 +38,19 @@ public enum KMLTag: String {
 public struct KMLConfig {
     // Able to replace with customized parser
     public static var tags: [String: KMLElement.Type] = [
-        KMLTag.Style.str: KMLStyle.self,
-        KMLTag.StyleMap.str: KMLStyleMap.self,
-        KMLTag.PolyStyle.str: KMLPolyStyle.self,
-        KMLTag.LineStyle.str: KMLLineStyle.self,
-        KMLTag.BalloonStyle.str: KMLBalloonStyle.self,
-        KMLTag.MultiGeometry.str: KMLMultiGeometry.self,
-        KMLTag.Polygon.str: KMLPolygon.self,
-        KMLTag.LineString.str: KMLLineString.self,
-        KMLTag.Point.str: KMLPoint.self,
-        KMLTag.Folder.str: KMLElement.self,
-        KMLTag.Placemark.str: KMLPlacemark.self,
-        KMLTag.Icon.str: KMLIcon.self,
-        KMLTag.IconStyle.str: KMLIconStyle.self
+        KMLTag.style.str: KMLStyle.self,
+        KMLTag.styleMap.str: KMLStyleMap.self,
+        KMLTag.polyStyle.str: KMLPolyStyle.self,
+        KMLTag.lineStyle.str: KMLLineStyle.self,
+        KMLTag.balloonStyle.str: KMLBalloonStyle.self,
+        KMLTag.multiGeometry.str: KMLMultiGeometry.self,
+        KMLTag.polygon.str: KMLPolygon.self,
+        KMLTag.lineString.str: KMLLineString.self,
+        KMLTag.point.str: KMLPoint.self,
+        KMLTag.folder.str: KMLElement.self,
+        KMLTag.placemark.str: KMLPlacemark.self,
+        KMLTag.icon.str: KMLIcon.self,
+        KMLTag.iconStyle.str: KMLIconStyle.self
     ]
 }
 
@@ -139,8 +139,8 @@ open class KMLStyle: KMLElement, KMLApplyStyle {
 
     public required init(_ element: AEXMLElement) {
         super.init(element)
-        if let _id: String = element.attributes["id"] {
-            styleId = _id
+        if let idAttr = element.attributes["id"] {
+            styleId = idAttr
             polyStyle = findElement(KMLPolyStyle.self)
             lineStyle = findElement(KMLLineStyle.self)
             iconStyle = findElement(KMLIconStyle.self)
@@ -406,9 +406,9 @@ open class KMLPlacemark: KMLElement {
         if !style.isEmpty {
             styleUrl = style.subString(1) // remove #
         }
-        let _description: AEXMLElement = element["description"]
+        let descriptionAttr: AEXMLElement = element["description"]
         if element.error == nil {
-            description = _description.string
+            self.description = descriptionAttr.string
         }
         super.init(element)
 
@@ -502,7 +502,7 @@ open class KMLDocument: KMLElement {
             print("Doesn't exist file at path - \(url)")
             let errorElement = AEXMLElement(name: "AEXMLError", value: "Doesn't exist file at path \(url)")
             errorElement.error = AEXMLError.parsingFailed
-            self.init(errorElement, generateMapKitClasses:generateMapKitClasses)
+            self.init(errorElement, generateMapKitClasses: generateMapKitClasses)
         }
     }
 
@@ -515,7 +515,7 @@ open class KMLDocument: KMLElement {
             print("Could not parse XML.")
             return nil
         }
-        self.init(element!, generateMapKitClasses:generateMapKitClasses)
+        self.init(element!, generateMapKitClasses: generateMapKitClasses)
     }
 
     public convenience init(_ element: AEXMLElement, generateMapKitClasses: Bool) {
@@ -531,13 +531,13 @@ open class KMLDocument: KMLElement {
     }
 
     fileprivate func initStyle() {
-        if let _styles: [KMLStyle] = findElements(KMLStyle.self) {
-            for style: KMLStyle in _styles {
+        if let styles: [KMLStyle] = findElements(KMLStyle.self) {
+            for style: KMLStyle in styles {
                 self.styles[style.styleId] = style
             }
         }
-        if let _styles: [KMLStyleMap] = findElements(KMLStyleMap.self) {
-            for style: KMLStyleMap in _styles {
+        if let styles: [KMLStyleMap] = findElements(KMLStyleMap.self) {
+            for style: KMLStyleMap in styles {
                 for (key, value): (String, String) in style.pairs {
                     style.addPairsRef(key, style: self.styles[value]!)
                 }
@@ -603,7 +603,7 @@ open class KMLDocument: KMLElement {
         let bgQueue = DispatchQueue.global(qos: .default)
         let mainQueue: DispatchQueue = DispatchQueue.main
         bgQueue.async(execute: {
-            if let doc: KMLDocument = KMLDocument(url: url, generateMapKitClasses:generateMapKitClasses) {
+            if let doc: KMLDocument = KMLDocument(url: url, generateMapKitClasses: generateMapKitClasses) {
                 mainQueue.async(execute: {
                     callback(doc)
                 })
@@ -616,7 +616,7 @@ open class KMLDocument: KMLElement {
         let bgQueue = DispatchQueue.global(qos: .default)
         let mainQueue: DispatchQueue = DispatchQueue.main
         bgQueue.async(execute: {
-            if let doc: KMLDocument = KMLDocument(data: data, generateMapKitClasses:generateMapKitClasses) {
+            if let doc: KMLDocument = KMLDocument(data: data, generateMapKitClasses: generateMapKitClasses) {
                 mainQueue.async(execute: {
                     callback(doc)
                 })
@@ -676,6 +676,6 @@ private extension UIColor {
         } else {
             print("Scan hex error")
         }
-        self.init(red:red, green:green, blue:blue, alpha:alpha)
+        self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
 }
