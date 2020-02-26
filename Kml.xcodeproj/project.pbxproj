@@ -254,11 +254,11 @@
 				TargetAttributes = {
 					78E3D7C11B815BE000170097 = {
 						CreatedOnToolsVersion = 6.4;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1130;
 					};
 					78E3D7D61B815BE000170097 = {
 						CreatedOnToolsVersion = 6.4;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1130;
 						TestTargetID = 78E3D7C11B815BE000170097;
 					};
 				};
@@ -582,7 +582,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.asus4.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -602,7 +602,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.asus4.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -626,7 +626,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.asus4.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kml.app/Kml";
 			};
 			name = Debug;
@@ -647,7 +647,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.github.asus4.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Kml.app/Kml";
 			};
 			name = Release;
